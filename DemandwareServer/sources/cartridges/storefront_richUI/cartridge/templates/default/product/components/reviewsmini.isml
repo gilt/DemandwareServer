@@ -1,0 +1,26 @@
+<!-- i.e. for category pages and productlistings, is multiple -->
+<isscript>
+	var uuid = dw.util.UUIDUtils.createUUID();	
+	var pid = '';
+	if(pdict.Product != null)
+	{
+		pid = pdict.Product.isVariant() ? pdict.Product.masterProduct.ID : pdict.Product.ID;
+	}
+		
+	var pwrDivId = "pr_snippet_category_"+uuid;
+	var jqSelector = "#"+pwrDivId;
+</isscript>
+
+<div class="pr_stars" id="pr_snippet_category_${uuid}" >
+	<script type="text/javascript">
+	if (typeof POWERREVIEWS != "undefined") { 
+		POWERREVIEWS.display.snippet({write : function(content) { jQuery('${jqSelector}').append(content); }}, 
+			{
+				pr_page_id : '${pid}', 
+				pr_snippet_min_reviews : '0'
+			}
+		)
+	}
+	</script>
+ </div>
+    

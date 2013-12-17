@@ -1,0 +1,19 @@
+<!-- redirect to the default home page -->
+<isset scope="page" name="Location" value="${URLUtils.httpHome()}"/>
+<isredirect location="${Location}"/>
+
+<iscomment>a page with a meta refresh in case the browser doesn't follow the redirect</iscomment>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>${Resource.msg('error_forbidden.redirect','common',null)}</title>
+	<meta http-equiv="refresh" content="5; url=${Location}">
+	<meta http-equiv="Robots" content="noindex, follow" />
+</head>
+<body>
+	<h1>${Resource.msg('error_forbidden.hijacked','common',null)}</h1>
+	<p class="error-page-message">
+		${Resource.msg('error_forbidden.message','common',null)} <a href="${Location}">${Resource.msg('error_forbidden.home','common',null)}</a>
+	</p>
+</body>
+</html>

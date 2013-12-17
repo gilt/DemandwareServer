@@ -1,0 +1,20 @@
+<iscomment>THIS FILE ONLY CONTAINS DIFFERENCES BETWEEN SIMPLE AND RICH UI LIB INCLUDES</iscomment>
+<iscomment>
+The <!—BEGIN/END… comments are control statements for the build cartridge which can be found in xChange https://xchange.demandware.com/docs/DOC-5728 or checked out from SVN at https://svn2.hosted-projects.com/cs_europe/DWTechRepository/cartridges/build_cs
+If you are not using the build cartridge the comments can be safely removed.
+</iscomment>
+
+<iscomment>THIRD PARTY STYLESHEETS STYLING</iscomment>
+<link href="${URLUtils.staticURL('/lib/jquery/ui/jquery.ui.all.css')}" type="text/css" rel="stylesheet" />
+<link href="${URLUtils.staticURL(URLUtils.CONTEXT_CATALOG, null, '/pwr/engine/pr_styles_review.css')}" type="text/css" rel="stylesheet" />
+
+<!-- jQuery -->
+<script src="${URLUtils.staticURL('/lib/jquery/jquery-1.7.1.min.js')}" type="text/javascript"></script>
+<script>var app={};</script>
+<isinclude template="common/powerreviews_UI"/>
+<!--[if lt IE 9]>
+<script src="${URLUtils.staticURL('/js/lib/html5.js')}"></script>
+<![endif]-->
+
+<iscomment>Demandware active data scripts</iscomment>
+<isactivedatahead />

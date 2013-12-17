@@ -1,0 +1,4 @@
+<iscache type="relative" minute="90" varyby="price_promotion"/>
+<isinclude template="util/modules"/>
+
+<isproductgrid pagingmodel="${pdict.ProductPagingModel}" category="${pdict.ProductSearchResult.category}"/>

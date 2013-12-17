@@ -1,0 +1,283 @@
+<iscomment>
+	This template renders a product tile using a product. The following parameters
+	must be passed into the template module:
+	
+	product 		: the product to render the tile for
+	showswatches 	: check, whether to render the color swatches (default is false)
+	enableswatches	: flag indicating whether to enable the swatch links (default is false)
+	showpricing		: check, whether to render the pricing (default is false)
+	showpromotion	: check, whether to render the promotional messaging (default is false)
+	showrating		: check, whether to render the review rating (default is false)
+</iscomment>
+
+<iscomment>set the product for local reuse</iscomment>
+<isset name="Product" value="${pdict.product}" scope="page"/>
+<isset name="OrgProduct" value="${null}" scope="page"/>
+
+<iscomment>set default values</iscomment>
+<isset name="showswatches" value="${false}" scope="page"/>
+<isif condition="${pdict.showswatches != null}">
+	<isset name="showswatches" value="${pdict.showswatches}" scope="page"/>
+</isif>
+<isset name="showpricing" value="${false}" scope="page"/>
+<isif condition="${pdict.showpricing != null}">
+	<isset name="showpricing" value="${pdict.showpricing}" scope="page"/>
+</isif>
+<isset name="showpromotion" value="${false}" scope="page"/>
+<isif condition="${pdict.showpromotion != null}">
+	<isset name="showpromotion" value="${pdict.showpromotion}" scope="page"/>
+</isif>
+<isset name="showrating" value="${false}" scope="page"/>
+<isif condition="${pdict.showrating != null}">
+	<isset name="showrating" value="${pdict.showrating}" scope="page"/>
+</isif>
+<isset name="enableswatches" value="${false}" scope="page"/>
+<isif condition="${pdict.enableswatches != null}">
+	<isset name="enableswatches" value="${pdict.enableswatches}" scope="page"/>
+</isif>
+
+<isif condition="${!empty(Product)}">
+
+	<iscomment>
+		Get the colors selectable from the current product master.
+	</iscomment>
+	<isscript>
+		var selectableColors : dw.util.Collection = new dw.util.ArrayList();
+		if( Product.master )
+		{
+			var varModel : dw.catalog.ProductVariationModel = Product.variationModel;
+			var varAttrColor : dw.catalog.ProductVariationAttribute = varModel.getProductVariationAttribute("color");
+	
+			if( varAttrColor != null )
+			{
+				var allColors : dw.util.Collection = varModel.getAllValues( varAttrColor );
+				
+				// filter out colors with not orderable variants
+				for each( var color in allColors )
+				{
+					if( varModel.hasOrderableVariants( varAttrColor, color ) )
+					{
+						selectableColors.add( color );
+					}
+				}
+			}
+		}
+	</isscript>
+	
+	<iscomment>
+		Generate link to product detail page. If a color variation is available, the first color is used as link url.
+	</iscomment>
+	<isset name="productUrl" value="${URLUtils.http('Product-Show', 'pid', Product.ID)}" scope="page"/>
+	<isif condition="${!empty(selectableColors) && selectableColors.size() > 0}">
+		<isset name="colorVarAttr" value="${Product.variationModel.getProductVariationAttribute('color')}" scope="page"/>
+		<isset name="productUrl" value="${Product.variationModel.urlSelectVariationValue('Product-Show', colorVarAttr, selectableColors.get(0))}" scope="page"/>
+	</isif>
+
+<div class="product-tile" id="${Product.UUID}" data-itemid="${Product.ID}"><!-- dwMarker="product" dwContentID="${Product.UUID}" -->
+		
+<iscomment>Image</iscomment>
+<iscomment>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</iscomment>
+
+<div class="product-image">
+	
+	<iscomment>Render the thumbnail</iscomment>
+		
+	<iscomment>Determine the correct image, either first displayed color variation or default product thumbnail</iscomment>
+	<isif condition="${!empty(selectableColors) && selectableColors.size() > 0}">
+		<isset name="firstColorVariation" value="${selectableColors.get(0)}" scope="page"/>
+		<isset name="image" value="${firstColorVariation.getImage('medium')}" scope="page"/>					
+	<iselse>
+		<isset name="image" value="${Product.getImage('medium',0)}" scope="page"/>					
+	</isif>
+	
+	<iscomment>If image couldn't be determined, display a "no image" thumbnail</iscomment>
+	<isif condition="${!empty(image)}">
+		<isset name="thumbnailUrl" value="${image.getURL()}" scope="page"/>
+		<isset name="imageAlt" value="${image.alt}" scope="page"/>
+		<isset name="imageTitle" value="${image.title}" scope="page"/>
+	<iselse>
+		<isset name="thumbnailUrl" value="${URLUtils.staticURL('/images/noimagemedium.png')}" scope="page"/>
+		<isset name="imageAlt" value="${Product.name}" scope="page"/>
+		<isset name="imageTitle" value="${Product.name}" scope="page"/>
+	</isif>
+
+	<a class="thumb-link" href="${URLUtils.url('Product-Show','pid', Product.ID)}" title="${Product.name}">
+		<img src="${thumbnailUrl}" alt="${imageAlt}" title="${imageTitle}" height='195' width='195' />
+	</a>
+</div>
+		
+<iscomment>Product Name</iscomment>
+<iscomment>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</iscomment>
+
+<div class="product-name">
+	<a class="name-link" href="${productUrl}" title="${Product.name}">
+		<isprint value="${Product.name}"/>
+	</a>
+</div>
+		
+<iscomment>Pricing</iscomment>
+<iscomment>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</iscomment>
+
+<isif condition="${showpricing}">
+
+	<div class="product-pricing">
+
+		<iscomment>Renders pricing information depending on the option or variation model, as well as scaled prices and so on.</iscomment>
+		<isif condition="${Product.productSet}">
+			
+			<iscomment>Product set pricing</iscomment>
+			<span class="product-set-price">${Resource.msg('global.buyall','locale',null)}</span>
+		
+		<iselseif condition="${Product.master && Product.priceModel.isPriceRange()}">
+			
+			<iscomment>Product master price range depending on the variants</iscomment>
+			<isprint value="${Product.priceModel.minPrice}"/> - <isprint value="${Product.priceModel.maxPrice}"/>
+		
+		<iselse>
+		
+			<iscomment>For Product master without a price range get the pricing from its first variant </iscomment>
+			<isif condition="${Product.master && !Product.priceModel.isPriceRange()}"/>
+				<iscomment>Preserve current product instance</iscomment>
+				<isset name="OrgProduct" value="${Product}" scope="page"/>
+				<isset name="Product" value="${OrgProduct.variationModel.variants[0]}" scope="page"/>
+			</isif>
+			<iscomment>
+				Regular pricing through price model of the product. If the product is an option product, 
+				we have to initialize the product price model with the option model.
+			</iscomment>
+			<isif condition="${Product.optionProduct}">
+				<isset name="PriceModel" value="${Product.getPriceModel(Product.getOptionModel())}" scope="page"/>
+			<iselse>
+				<isset name="PriceModel" value="${Product.getPriceModel()}" scope="page"/>
+			</isif>
+
+			<iscomment>
+				Check whether the product has price in the sale pricebook. If so, then
+				display two prices: crossed-out standard price and sales price.
+			</iscomment>
+			<isinclude template="product/components/standardprice"/>
+			<isset name="SalesPrice" value="${PriceModel.getPrice()}" scope="page"/>
+			<isset name="ShowStandardPrice" value="${StandardPrice.available && SalesPrice.available && StandardPrice.compareTo(SalesPrice) == 1}" scope="page"/>
+			
+			<isif condition="${ShowStandardPrice}">
+				<div class="product-discounted-price">
+					<span class="product-standard-price" title="Regular Price"><isprint value="${StandardPrice}"/></span>
+					<span class="product-sales-price" title="Sale Price"><isprint value="${SalesPrice}"/></span>
+				</div>
+			<iselse>
+				<span class="product-sales-price" title="Sale Price"><isprint value="${SalesPrice}"/></span>
+			</isif>
+
+			<isif condition="${!empty(OrgProduct)}">
+				<iscomment>Restore current product instance</iscomment>
+				<isset name="Product" value="${OrgProduct}" scope="page"/>
+			</isif>
+			
+		</isif>
+		
+	</div>
+
+</isif>
+		
+<iscomment>Promotion</iscomment>
+<iscomment>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</iscomment>
+
+<isif condition="${showpromotion}">
+
+	<div class="product-promo">
+
+		<iscomment>Render information on active product promotions</iscomment>
+		<isset name="promos" value="${dw.campaign.PromotionMgr.activeCustomerPromotions.getProductPromotions(Product)}" scope="page"/>
+		
+		<isif condition="${!empty(promos)}">
+			<isloop items="${promos}" alias="promo" status="promoloopstate">
+				<div class="promotional-message <isif condition="${promoloopstate.first}"> first <iselseif condition="${promoloopstate.last}"> last</isif> ">
+					<isprint value="${promo.calloutMsg}" encoding="off"/>
+				</div>
+			</isloop>
+		</isif>
+
+	</div>
+	
+</isif>
+		
+<iscomment>Rating</iscomment>
+<iscomment>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</iscomment>
+
+<isif condition="${showrating}">
+	<isinclude template="product/components/reviewsmini"/>
+</isif>
+		
+<iscomment>Swatches</iscomment>
+<iscomment>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</iscomment>
+
+<isif condition="${showswatches}">
+
+	<iscomment>
+		Render the color swatch secion for a product. We show color swatches for color variations known to the product master.
+	</iscomment>
+	
+	<isif condition="${!empty(selectableColors) && selectableColors.size() > 0}">
+
+		<div class="product-swatches">
+		
+			<iscomment>render a link to the palette and hide the actual palette if there are more than five colors contained</iscomment>
+			<isif condition="${selectableColors.size() > 5}">
+				<a class="product-swatches-all">${Resource.msg('productresultarea.viewallcolors','search',null)}</a> (<isprint value="${selectableColors.size()}"/>)
+			</isif>
+				
+			<iscomment>render the palette, the first swatch is always preselected</iscomment>
+
+			<ul class="swatch-list <isif condition="${selectableColors.size() > 5}">swatch-toggle</isif>">							
+				
+				<isloop items="${selectableColors}" var="colorValue" status="varloop">
+
+					<iscomment>Determine the swatch and the thumbnail for this color</iscomment>
+					<isset name="colorSwatch" value="${colorValue.getImage('swatch')}" scope="page"/>
+					<isset name="colorThumbnail" value="${colorValue.getImage('medium')}" scope="page"/>
+
+					<iscomment>If images couldn't be determined, display a "no image" thumbnail</iscomment>
+					<isif condition="${!empty(colorSwatch)}">
+						<isset name="swatchUrl" value="${colorSwatch.getURL()}" scope="page"/>
+						<isset name="swatchAlt" value="${colorSwatch.alt}" scope="page"/>
+						<isset name="swatchTitle" value="${colorSwatch.title}" scope="page"/>
+					<iselse>
+						<isset name="swatchUrl" value="${URLUtils.staticURL('/images/noimagesmall.png')}" scope="page"/>
+						<isset name="swatchAlt" value="${colorValue.displayValue}" scope="page"/>
+						<isset name="swatchTitle" value="${colorValue.displayValue}" scope="page"/>
+					</isif>
+					<isif condition="${!empty(colorThumbnail)}">
+						<isset name="thumbnailUrl" value="${colorThumbnail.getURL()}" scope="page"/>
+						<isset name="thumbnailAlt" value="${colorThumbnail.alt}" scope="page"/>
+						<isset name="thumbnailTitle" value="${colorThumbnail.title}" scope="page"/>
+					<iselse>
+						<isset name="thumbnailUrl" value="${URLUtils.staticURL('/images/noimagesmall.png')}" scope="page"/>
+						<isset name="thumbnailAlt" value="${colorValue.displayValue}" scope="page"/>
+						<isset name="thumbnailTitle" value="${colorValue.displayValue}" scope="page"/>
+					</isif>
+
+					<iscomment>build the proper URL</iscomment>
+					<isset name="productUrl" value="${Product.variationModel.urlSelectVariationValue('Product-Show',varAttrColor,colorValue)}" scope="page"/>
+					<li>
+						<isif condition="${enableswatches}">
+							<a class="swatch <isif condition="${varloop.first}">selected</isif>" title="<isprint value="${colorValue.displayValue}"/>" href="<isprint value="${productUrl}"/>">
+								<img class="swatch-image" src="${swatchUrl}" alt="${swatchAlt}" title="${swatchTitle}" data-thumb='{"src":"${thumbnailUrl}","alt":"${thumbnailAlt}","title":"${thumbnailTitle}"}'/>
+							</a>
+						<iselse>
+							<span class="swatch">						
+								<img class="swatch-image" src="${swatchUrl}" alt="${swatchAlt}" title="${swatchTitle}" data-thumb='{"src":"${thumbnailUrl}","alt":"${thumbnailAlt}","title":"${thumbnailTitle}"}'/>
+							</span>						
+						</isif>
+					</li>
+				</isloop>
+				
+			</ul>
+
+		</div>
+	
+	</isif>
+	
+</isif>
+		
+	</div><!--  END: .product-tile -->
+</isif>

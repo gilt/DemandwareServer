@@ -1,0 +1,15 @@
+<isdecorate template="product/pt_productdetails">
+
+	<h1>The product name is ${pdict.myProduct.name}</h1>
+	
+	set product with myProduct<br><isset name="product" value="${pdict.myProduct}" scope="pdict"/>
+	
+	created isinclude<br>
+	<commented-out isinclude template="product/producttile"/>
+	<isinclude template="util/modules">
+	
+	last visited ::: <br>
+	<commented-out isinclude url="${URLUtils.url('Product-IncludeLastVisited')}"/>
+	<isproducttile product="${pdict.myProduct}" showswatches="${true}" showpricing="${true}"/>
+
+</isdecorate>

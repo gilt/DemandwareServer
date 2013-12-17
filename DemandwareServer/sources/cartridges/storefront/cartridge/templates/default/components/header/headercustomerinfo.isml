@@ -1,0 +1,80 @@
+<ul class="menu-utility-user">
+ 	
+ 	<iscomment>
+ 		User has sessoin, but not currently active (welcome back)
+		--------------------------------------------------------
+ 	</iscomment>
+ 	
+	 <isif condition="${ (pdict.CurrentCustomer.registered) && (!pdict.CurrentCustomer.authenticated)}">
+	     
+	     <li>
+	     	${Resource.msg('headercustomerinfo.welcomeback','components',null)}
+	     	<a href="${URLUtils.https('Account-Show')}" title="${Resource.msg('global.accountlink','locale',null)} " class="user-account">
+	     		<isprint value="${pdict.CurrentCustomer.profile.firstName}"/>
+	     		<isprint value="${pdict.CurrentCustomer.profile.lastName}"/>
+		     </a>
+		      <isif condition="${!pdict.CurrentCustomer.authenticated}">
+	         	(
+		       		<a title="${Resource.msg('global.login','locale',null)}${pdict.CurrentCustomer.profile.firstName} ${pdict.CurrentCustomer.profile.lastName}" href="${URLUtils.https('Account-Show')}" class="user-account-login">
+		       			${Resource.msg('headercustomerinfo.pleaselogin','components',null)}
+		       		</a>
+	         	)
+	         </iselse>
+	         	
+		     </isif>
+	     </li>
+	     <li class="last">
+	     	<a title="${Resource.msg('headercustomerinfo.not','components',null)} ${pdict.CurrentCustomer.profile.firstName} ${pdict.CurrentCustomer.profile.lastName}" href="${URLUtils.url('Login-Logout')}">
+	     		(
+	     			${Resource.msg('headercustomerinfo.not','components',null)}
+	     			<isprint value="${pdict.CurrentCustomer.profile.firstName}"/>?
+	     		)
+	     	</a>
+	     </li>	
+	     
+ 	<iscomment>
+ 		User has sessoin and is validated
+		--------------------------------------------------------
+ 	</iscomment>
+ 	
+	 <iselseif condition="${pdict.CurrentCustomer.registered}">
+	 
+	 	<li>
+			${Resource.msg('headercustomerinfo.welcome','components',null)}
+	     	<a href="${URLUtils.https('Account-Show')}" title="${Resource.msg('global.accountlink','locale',null)} " class="user-account">
+	     		<isprint value="${pdict.CurrentCustomer.profile.firstName}"/>
+	     		<isprint value="${pdict.CurrentCustomer.profile.lastName}"/>
+		     </a>
+	     </li>
+	     <li class="last">
+	     	<a title="${Resource.msg('headercustomerinfo.not','components',null)} ${pdict.CurrentCustomer.profile.firstName} ${pdict.CurrentCustomer.profile.lastName}" href="${URLUtils.url('Login-Logout')}">
+	     		(
+	     			${Resource.msg('headercustomerinfo.not','components',null)}
+	     			<isprint value="${pdict.CurrentCustomer.profile.firstName}"/>?
+	     		)
+	     	</a>
+	     </li>	
+	     
+ 	<iscomment>
+ 		User has no session
+		--------------------------------------------------------
+ 	</iscomment>
+ 	
+	 <iselse>
+	 	
+	 		<li>
+	 			${Resource.msg('headercustomerinfo.welcome','components',null)}
+			     <a title="${Resource.msg('global.login','locale',null)}" href="${URLUtils.https('Account-Show')}" class="user-login">
+			     	${Resource.msg('global.login','locale',null)}
+			     </a>
+	 		</li>
+	 		
+	 		<li class="last">
+			     <a title="${Resource.msg('global.register','locale',null)}" href="${URLUtils.https('Account-StartRegister')}" class="user-register">
+			     	${Resource.msg('global.register','locale',null)}
+			     </a>
+	 		</li>
+	
+	 </isif>
+ 
+</ul>

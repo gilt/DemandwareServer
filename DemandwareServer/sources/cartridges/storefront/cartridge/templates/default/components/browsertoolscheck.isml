@@ -1,0 +1,14 @@
+<iscomment>
+	This template is used in every page to render warning messages if certain
+	functionality which is necessary to use the website (like cookies and Javascript) 
+	is disabled in the client browser.
+</iscomment>
+
+<iscomment>Javascript is disabled in browser</iscomment>
+<div id="browser-check">
+<noscript>
+	<div class="browser-compatibility-alert">
+		<p class="browser-error">${Resource.msg('browsertoolscheck.javascript','components',null)}</p>		
+	</div>
+</noscript>
+</div>

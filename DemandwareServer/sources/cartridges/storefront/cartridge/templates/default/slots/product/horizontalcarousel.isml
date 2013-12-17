@@ -1,0 +1,13 @@
+<iscache type="relative" minute="30" varyby="price_promotion"/>
+
+<isinclude template="util/modules"/>
+
+<h2>${Resource.msg('horizontalcarousel.featuredproducts','slots',null)}</h2>
+
+<ul id="horizontal-carousel" class="horizontal-carousel">
+	<isloop items="${slotcontent.content}" var="product">
+		<li>
+			<isproducttile product="${product}" showswatches="${true}" showpricing="${true}" showpromotion="${true}" showrating="${true}"/>
+		</li>
+	</isloop>
+</ul>

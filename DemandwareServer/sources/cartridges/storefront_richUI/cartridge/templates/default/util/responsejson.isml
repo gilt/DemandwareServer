@@ -1,0 +1,6 @@
+<iscontent type="application/json" charset="UTF-8" compact="true"/>
+<isscript>
+	var oResponse = pdict.JSONResponse || {};
+	var responseJson = JSON.stringify(oResponse);
+</isscript>
+<isprint value="${responseJson}" encoding="off"/>

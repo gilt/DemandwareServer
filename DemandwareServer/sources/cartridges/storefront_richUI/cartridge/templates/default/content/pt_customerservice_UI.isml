@@ -1,0 +1,9 @@
+<iscomment>Load custom CSS file on demand</iscomment>
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+	app.util.clearDynamicCss();
+	<isif condition="${!empty(pdict.Content) && ('customCSSFile' in pdict.Content.custom) && !empty(pdict.Content.custom.customCSSFile)}">
+	app.util.loadedCssFiles.push(app.util.loadCssFile("${pdict.Content.custom.customCSSFile.getURL()}"));
+	</isif>
+	});
+</script>

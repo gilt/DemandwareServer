@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19">
+
+	<!-- form providing fields for gift certificate purchase -->	
+	<group formid="purchase">
+		<field formid="from" label="forms.giftcert.purchase.from.label" type="string" mandatory="true"
+			description="forms.giftcert.purchase.from.description"
+			missing-error="forms.giftcert.purchase.from.missing-error"
+			binding="from"/>
+		<field formid="recipient" label="forms.giftcert.purchase.recipient.label" type="string" mandatory="true"
+			description="forms.giftcert.purchase.recipient.description"
+			missing-error="forms.giftcert.purchase.recipient.missing-error"
+			binding="recipient"/>
+		<field formid="recipientEmail" label="forms.giftcert.purchase.recipientemail.label" type="string" mandatory="true"
+			description="forms.giftcert.purchase.recipientemail.description"
+			regexp="^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$" 
+			binding="recipientEmail"
+			parse-error="forms.giftcert.purchase.recipientemail.parse-error"
+			missing-error="forms.giftcert.purchase.recipientemail.missing-error"
+			value-error="forms.giftcert.purchase.recipientemail.value-error"/>
+		<field formid="confirmRecipientEmail" label="forms.giftcert.purchase.confirmrecipientemail.label" type="string" mandatory="true"
+			description="forms.giftcert.purchase.confirmrecipientemail.description"
+			regexp="^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$" 
+			binding="confirmRecipientEmail"
+			parse-error="giftcert.confirmrecipientemailparseerror"
+			missing-error="giftcert.confirmrecipientemailmissingerror"
+			value-error="giftcert.confirmrecipientemailvalueerror"/>
+		<field formid="message" label="giftcert.messagelabel" type="string" mandatory="false"
+			description="giftcert.purchasemessagedescription"
+			binding="message"/>
+		<field formid="amount" label="giftcert.amountlabel" type="number" mandatory="true" 
+			description="giftcert.amountdescription"
+			binding="amount"
+			parse-error="giftcert.amountparseerror"
+			missing-error="giftcert.amountmissingerror"
+			value-error="giftcert.amountvalueerror"/>
+		<field formid="lineItemId" type="string" mandatory="false" binding="lineitemid"/>
+	</group>
+
+	<!-- form providing field for balance check -->	
+	<group formid="balance">
+		<field formid="giftCertID" label="forms.giftcert.balance.giftcertid.label" type="string" mandatory="true" 
+			description="forms.giftcert.balance.giftcertid.description"
+			missing-error="forms.giftcert.balance.giftcertid.missing-error"/>
+	</group>
+
+	<!-- form providing fields for balance check and redemption (used by checkout billing page) -->	
+	<group formid="redemption">
+		<field formid="amount" label="forms.giftcert.019" type="number" 
+			mandatory="false" 
+			description="forms.giftcert.020"
+			binding="amount"
+			missing-error="forms.giftcert.021"
+			value-error="forms.giftcert.022"/>
+		<field formid="number" label="forms.giftcert.023" type="string" 
+			mandatory="true" 
+			binding="number"
+			description="forms.giftcert.024"
+			missing-error="forms.giftcert.025"
+			value-error="forms.giftcert.026"/>
+	</group>
+
+	<action formid="redeem" valid-form="true"/>
+</form>

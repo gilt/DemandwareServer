@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- TemplateComment :  EMail form for inviting someone to shop  -->
+<iscontent type="text/html" charset="UTF-8"/>
+<isinclude template="util/modules"/>
+<html>
+<head>
+
+</head>
+<body>
+<table width="100%" cellpadding="0" cellspacing="0">
+	<tr>
+		<td align="center" style="${Resource.msg('email.backgroundcell','email',null)}">
+			<center>
+				<table  style="${Resource.msg('email.containertable','email',null)}">
+					<tr>
+						<td colspan="2" style="${Resource.msg('email.tablecell','email',null)}">
+							<p><isprint value="${pdict.CurrentForms.sendtofriend.message.htmlValue}"/></p>
+							<p><a href='<isprint value="${pdict.CurrentForms.sendtofriend.messagelink.htmlValue}"/>'><isprint value="${pdict.CurrentForms.sendtofriend.messagelinktext.htmlValue}"/></a></p>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" style="${Resource.msg('email.tablecell','email',null)}">
+							<a href="${URLUtils.httpHome()}" title="${Resource.msg('global.storename','locale',null)}">
+								<img src="${URLUtils.httpStatic('/images/logo.gif')}" alt="${Resource.msg('global.storename','locale',null)}" style="border:none;"/>
+							</a>
+						</td>
+					</tr>
+					<tr>
+						<td style="${Resource.msg('email.tablecell','email',null)}">
+							<isset name="image" value="${pdict.Product.getImage('medium',0)}" scope="page"/>	
+							<isset name="imageURL" value="${image.httpURL}" scope="page"/>	
+							<isif condition="${!empty(image)}">
+								<isset name="thumbnailUrl" value="${imageURL}" scope="page"/>
+								<isset name="imageAlt" value="${image.alt}" scope="page"/>
+								<isset name="imageTitle" value="${image.title}" scope="page"/>
+							<iselse>
+								<isset name="thumbnailUrl" value="${URLUtils.httpStatic('/images/noimagesmall.png')}" scope="page"/>
+								<isset name="imageTitle" value="${p_productli.product.name}" scope="page"/>
+								<isset name="imageAlt" value="${p_productli.product.name}" scope="page"/>
+							</isif>
+							<img src="${thumbnailUrl}" alt="${imageAlt}" title="${imageTitle}"/>
+						</td>
+						<td style="${Resource.msg('email.tablecell','email',null)}">
+							<h1 style="${Resource.msg('email.h1','email',null)}"><isprint value="${pdict.Product.name}" encoding="off"/></h1>
+							<p>${Resource.msg('sendtoafrienddialog.item','account',null)}: <isprint value="${pdict.Product.ID}" encoding="off"/></p>
+							<isdisplayvariationvalues product="${pdict.Product}"/>
+							<isloop iterator="${pdict.ProductOptionModel.options}" alias="productOption">
+								<isset name="selectedOptionValue" value="${pdict.ProductOptionModel.getSelectedOptionValue(productOption)}" scope="page"/>					
+								<isprint value="${productOption.displayName}"/>: 
+								<isprint value="${selectedOptionValue.displayValue}"/>			
+							</isloop>
+							<isif condition="${pdict.Product.shortDescription}">
+								<p>
+									${Resource.msg('global.description','locale',null)}<br />
+									<isprint value="${pdict.Product.shortDescription}" encoding="off"/>
+								</p>
+							</isif>
+						</td>
+					</tr>
+				</table>						
+			</center>
+		</td>
+	</tr>
+</table>
+	
+</body>
+</html>

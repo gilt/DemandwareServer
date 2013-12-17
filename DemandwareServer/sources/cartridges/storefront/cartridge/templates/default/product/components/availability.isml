@@ -1,0 +1,31 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<iscomment>
+Prints a message about the product's availability. The messages to be displayed are defined as resources.
+</iscomment>
+<isif condition="${pdict.Product!=null && pdict.Product.availabilityModel != null}">	
+	<isset name="availabilityModel" value="${pdict.Product.availabilityModel}" scope="PAGE"/>
+	<isset name="availabilityStatus" value="${pdict.Product.availabilityModel.availabilityStatus}" scope="PAGE"/>
+	<isset name="inventoryRecord" value="${pdict.Product.availabilityModel.inventoryRecord}" scope="PAGE"/>
+	
+	<div class="availability-msg">
+		<isif condition="${availabilityStatus == dw.catalog.ProductAvailabilityModel.AVAILABILITY_STATUS_IN_STOCK && inventoryRecord != null && inventoryRecord.stockLevel.available}">
+			<p class="in-stock-msg">${StringUtils.format(Resource.msg('global.instock','locale',null))}</p>			
+		<iselseif condition="${availabilityStatus == dw.catalog.ProductAvailabilityModel.AVAILABILITY_STATUS_PREORDER}">
+			<isif condition="${pdict.Product.availabilityModel.inventoryRecord != null && pdict.Product.availabilityModel.inventoryRecord.inStockDate != null && pdict.Product.availabilityModel.inventoryRecord.inStockDate>new Date()}">
+				<p class="preorder-msg">${StringUtils.format(Resource.msg('global.allpreorder','locale',null))}</p>
+				<p class="in-stock-date-msg">${StringUtils.format(Resource.msg('global.inStockDate','locale',null), pdict.Product.availabilityModel.inventoryRecord.inStockDate.toDateString())}</p>
+			<iselse>
+				<p class="preorder-msg">${StringUtils.format(Resource.msg('global.allpreorder','locale',null))}</p>
+			</isif>
+		<iselseif condition="${availabilityStatus == dw.catalog.ProductAvailabilityModel.AVAILABILITY_STATUS_BACKORDER}">
+			<isif condition="${pdict.Product.availabilityModel.inventoryRecord != null && pdict.Product.availabilityModel.inventoryRecord.inStockDate != null && pdict.Product.availabilityModel.inventoryRecord.inStockDate>new Date()}">
+				<p class="backorder-msg">${StringUtils.format(Resource.msg('global.allbackorder','locale',null))}</p>
+				<p class="in-stock-date-msg">${StringUtils.format(Resource.msg('global.inStockDate','locale',null), pdict.Product.availabilityModel.inventoryRecord.inStockDate.toDateString())}</p>
+			<iselse>
+				<p class="backorder-msg">${StringUtils.format(Resource.msg('global.allbackorder','locale',null))}</p>
+			</isif>
+		<iselse>
+			<p class="not-available-msg">${Resource.msg('global.allnotavailable','locale',null)}</p>				
+		</isif>
+	</div>	
+</isif>

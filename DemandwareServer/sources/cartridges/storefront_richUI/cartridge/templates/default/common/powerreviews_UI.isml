@@ -1,0 +1,8 @@
+<iscomment>Script for powerreviews:</iscomment>
+<script src="${URLUtils.staticURL(URLUtils.CONTEXT_CATALOG, null, '/pwr/engine/js/full.js')}" type="text/javascript"></script>
+<script type="text/javascript">
+  // PowerReview related settings
+  var pr_zip_location = "${URLUtils.staticURL(URLUtils.CONTEXT_CATALOG, null, '')}";
+  var pr_merchant_id = "6690"; //THIS IS FOR STAGING/TEST ONLY! REPLACE WITH CLIENT SPECIFIC ID. 
+</script>
+<iscomment>Adding a comment for bug#543</iscomment>

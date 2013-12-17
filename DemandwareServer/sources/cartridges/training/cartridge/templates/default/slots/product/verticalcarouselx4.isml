@@ -1,0 +1,24 @@
+<iscache type="relative" minute="30" varyby="price_promotion"/>
+
+<isinclude template="util/modules"/>
+			
+<div class="verticalcarousel">
+	<ul id="vertical-carousel" class="vertical-carousel">
+		<li>
+			<div class="productcarousel">
+				<isloop items="${slotcontent.content}" var="product" status="status">			
+					
+					<isproducttile product="${product}" showpricing="${true}"/>
+					
+					<isif condition="${status.count%4==0 && !status.last}">
+							</div>
+						</li>
+						<li>
+							<div class="productcarousel">				
+					</isif>				
+				
+				</isloop>
+			</div><!-- END: productcarousel -->
+		</li>
+	</ul>
+</div><!-- END: verticalcarousel -->

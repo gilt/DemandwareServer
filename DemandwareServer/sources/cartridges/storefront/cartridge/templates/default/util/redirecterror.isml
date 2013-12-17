@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<iscomment>This page must be cached to prevent performance problems</iscomment>
+<iscache type="relative" hour="24"/>
+
+<iscomment>410 is one of the few error codes, for which pages are cached in the WebAdapter</iscomment>
+<isstatus value="410"/>
+
+<iscomment>This page should be static or only have limited dynamic parts. </iscomment>
+<head>
+	<title>${Resource.msg('redirect_error.title','common',null)}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Robots" content="noindex, nofollow" />
+</head>
+
+<body>
+	${Resource.msg('redirect_error.message','common',null)} <a href="/">${Resource.msg('redirect_error.home','common',null)}</a>
+</body>
+</html>

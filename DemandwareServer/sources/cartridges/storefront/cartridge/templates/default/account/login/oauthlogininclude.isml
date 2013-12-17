@@ -1,0 +1,62 @@
+<isif condition="${pdict.CurrentSession.customer.anonymous || pdict.CurrentSession.customer.externallyAuthenticated}">
+	<isif condition="${pdict.CurrentSession.customer.anonymous}">
+		<p>${Resource.msgf('logininclude.oauthcustomersheader','account',"")}</p>	
+	<iselse>
+		<p>${Resource.msgf('logininclude.oauthcustomersheaderreturning','account',"")}</p>
+	</isif>
+	<iscomment>Login Unsuccessful Error Message</iscomment>
+	<isif condition="${!pdict.CurrentForms.oauthlogin.loginsucceeded.valid}">
+		<div class="error-form">${Resource.msgf('logininclude.oauthloginerror','account',"")}</div>
+	</isif>
+
+	<form action="${URLUtils.httpsContinue()}" method="post" class="clearfix" id="${pdict.CurrentForms.oauthlogin.htmlName}">
+		<fieldset>
+		
+			<select  name="OAuthProvider" id="OAuthProvider" >
+				<option value="">${Resource.msgf('logininclude.oauthselect','account',"")}</option>
+				<option value="Google">${Resource.msgf('logininclude.oauthGoogle','account',"")}</option>
+				<option value="LinkedIn">${Resource.msgf('logininclude.oauthLinkedIn','account',"")}</option>
+				<option value="Microsoft">${Resource.msgf('logininclude.oauthMicrosoft','account',"")}</option>
+				<option value="Facebook">${Resource.msgf('logininclude.oauthFacebook','account',"")}</option>
+				<option value="GitHub">${Resource.msgf('logininclude.oauthGitHub','account',"")}</option>
+			</select>
+		
+			<isif condition="${pdict.CurrentSession.customer.anonymous || (pdict.CurrentSession.customer.externallyAuthenticated && ('Google' == pdict.CurrentSession.customer.profile.credentials.authenticationProviderID))}">
+			<input type="image" alt="Google login"
+			 	name="${pdict.CurrentForms.oauthlogin.login.htmlName}"
+			 	src="http://cdn.gigya.com/gs/GetSprite.ashx?path=%2FHTMLLogin%2F%5Bgoogle%5D_40.png"
+			 	/>
+			</isif>
+			<isif condition="${pdict.CurrentSession.customer.anonymous || (pdict.CurrentSession.customer.externallyAuthenticated && ('LinkedIn' == pdict.CurrentSession.customer.profile.credentials.authenticationProviderID))}">
+			<input type="image" alt="LinkedIn login"
+				 name="${pdict.CurrentForms.oauthlogin.login.htmlName}"
+				 src="http://cdn.gigya.com/gs/GetSprite.ashx?path=/HTMLLogin/[linkedin]_40.png"
+				 />
+			</isif>
+			<isif condition="${pdict.CurrentSession.customer.anonymous || (pdict.CurrentSession.customer.externallyAuthenticated && ('Microsoft' == pdict.CurrentSession.customer.profile.credentials.authenticationProviderID))}">
+			<input type="image" alt="Microsoft login"
+				 name="${pdict.CurrentForms.oauthlogin.login.htmlName}"
+				 src="http://cdn.gigya.com/gs/GetSprite.ashx?path=/HTMLLogin/[messenger]_40.png"
+				 />
+			</isif>
+
+			<isif condition="${pdict.CurrentSession.customer.anonymous || (pdict.CurrentSession.customer.externallyAuthenticated && ('Facebook' == pdict.CurrentSession.customer.profile.credentials.authenticationProviderID))}">
+			<input type="image" alt="Facebook login"
+				 name="${pdict.CurrentForms.oauthlogin.login.htmlName}"
+				 src="http://cdn.gigya.com/gs/GetSprite.ashx?path=/HTMLLogin/[facebook]_40.png"
+				 />
+			</isif>
+
+			<isif condition="${pdict.CurrentSession.customer.anonymous || (pdict.CurrentSession.customer.externallyAuthenticated && ('GitHub' == pdict.CurrentSession.customer.profile.credentials.authenticationProviderID))}">
+			<input type="image" alt="GitHub login"
+				 name="${pdict.CurrentForms.oauthlogin.login.htmlName}"
+				 src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OisBCgoKCwwLDg8PDisZFBkrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIACAAIAMBIgACEQEDEQH/xAAZAAADAQEBAAAAAAAAAAAAAAAFBwgGAwH/xAArEAACAAUCBAYCAwAAAAAAAAABAgMEBQYREjEABxMhIkFRYXGBYvFCUpH/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A2PMvmCbbeHSaNDWYrMwBpBGoQQewJHmx8h9n3RlyzNyzNRaFcb1Fpo9+jMhhgfiuwHwMcGLb694c05eYiRijTE8ZktvpVMuAPpQBxTWBnOBnbPASbbUzcstUVhW49RWaHfoywY5H5LsR8jHDz5acwTcjxKTWYay9ZlwdQA0iMB2JA8mHmPse2/wM5wM7Z4mW5OvZ/NOYmIcYu0vPCZDbalfDkH6Yg8B5SJWp2jf8xFlpRphqPGd4sJWAZoGCCwG58DZyAcZyeKAtq7qJcyZpE6sWIqa3gsCroPcH9cB73s2LVZ6Vr1CjQ5WuyRBhs48EdR/B/wDSM+hwfbjy2SbhzVWSetOXoMZenqiQEIWYJ1Z0nYgYHYE78AduW7qJbKZq86sKIya0gqpZ3HsB+uJ2mY8e/uYIiJCKtUZpVCb6IYwO/wAIuT8Hhn88Leq1fm6DDo9PjTTjrq7Q18KZ6eNTbDz3PrwY5Y8u4dpQ2nqg6R6tFXSSvdYK/wBV9T6n6+Q//9k="
+				 />
+			</isif>
+
+			<input type="hidden" name="rememberme" id="rememberme" value="">
+			<input type="hidden" name="${pdict.CurrentForms.oauthlogin.secureKeyHtmlName}" value="${pdict.CurrentForms.oauthlogin.secureKeyValue}"/>			
+		</fieldset>
+		<p>${Resource.msgf('logininclude.oauthdetails','account',"")}</p>
+	</form>		
+</isif>

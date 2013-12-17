@@ -1,0 +1,19 @@
+<isset name="sessionVar" value="${1}" scope="session"/>
+
+<isset name="booleanVar" value="${true}" scope="session"/>
+
+This is the version  ::: ${session.custom.sessionVar}<br/>
+
+This is a boolean ::: ${false}<br/>
+
+This is a booleanVar ::: ${session.custom.booleanVar}<br/>
+
+This is a string ::: "Hi there!"<br/>
+
+<isset name="requestVar" value="${request.custom.requestVar + 1}" scope="session"/>
+This is a requestVar ::: ${request.custom.requestVar}<br/>
+
+<isset name="requestVar" value="${request.custom.requestVar + 1}" scope="request"/>
+
+This is a counter ::: ${request.custom.requestVar}<br/>
+

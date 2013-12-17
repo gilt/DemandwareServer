@@ -1,0 +1,44 @@
+<isset name="DecoratorTemplate" value="product/pt_productdetails" scope="page"/>
+<isif condition="${pdict.CurrentHttpParameterMap.source.stringValue == 'search'}">
+	<isset name="DecoratorTemplate" value="util/pt_empty" scope="page"/>
+</isif>
+
+<isdecorate template="${DecoratorTemplate}">
+	
+<isinclude url="${pdict.Location + "&pwr=true"}"/>
+
+<iscomment>
+	This template implements the write product recommendation page (simmilar to the productdetails page). It includes
+	the basic product information template (product/product-*), and
+	shows less additional product information, such as attributes, accessories,
+	bundled products, but a product recommendation form.
+</iscomment>
+
+<isinclude template="util/modules"/>
+
+<div id="pwrwritediv">
+	<isset name="image" value="${pdict.Product.getImage('medium',0)}" scope="page"/>
+	<isif condition="${!empty(image)}">
+		<isset name="imageUrl" value="${image.getURL()}" scope="page"/>
+		<isset name="imageAlt" value="${image.alt}" scope="page"/>
+	<iselse>
+		<isset name="imageUrl" value="${URLUtils.staticURL('/images/noimagemedium.png')}" scope="page"/>
+		<isset name="imageAlt" value="${pdict.Product.name}" scope="page"/>
+	</isif>
+	<img src="${imageUrl}" alt="${imageAlt}" class="review-image"/>
+	
+	<h1><!-- Product Name Display --><isprint value="${pdict.Product.name}"/></h1>
+	
+	<isprint value="${pdict.Product.shortDescription}"/>
+	
+	
+	<isscript>
+		var source = "web";
+		if (pdict.CurrentHttpParameterMap.source.stringValue == "email") {
+			source = "email";
+		}
+	</isscript>
+	<iframe src="http://services.powerreviews.com/SubmitReview.do?pageId=${pdict.Product.ID}&amp;merchantId=6690&amp;source=${source}&merchantUserEmail=user@yoursite.com&promoCode=coupon}&pr_locale=" frameborder="0" height="2000" width="100%" scrolling="no"/></iframe>
+</div>
+	
+</isdecorate>

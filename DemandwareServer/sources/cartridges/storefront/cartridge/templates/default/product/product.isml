@@ -1,0 +1,15 @@
+<iscomment>
+	Renders product detail page both quickview and normal view.
+	If the product is a product set or bundle, then it also includes subproduct template to 
+	render sub product details.
+</iscomment>
+
+<isset name="DecoratorTemplate" value="product/pt_productdetails" scope="page"/>
+<iscomment>pwr = power review write</iscomment>
+<isif condition="${pdict.CurrentHttpParameterMap.format.stringValue == 'ajax' || pdict.CurrentHttpParameterMap.pwr.stringValue == 'true' || pdict.CurrentHttpParameterMap.source.stringValue == 'search' || pdict.CurrentHttpParameterMap.source.stringValue == 'quickview' || pdict.CurrentHttpParameterMap.source.stringValue == 'giftregistry' || pdict.CurrentHttpParameterMap.source.stringValue == 'wishlist' }">
+	<isset name="DecoratorTemplate" value="util/pt_empty" scope="page"/>
+</isif>
+
+<isdecorate template="${DecoratorTemplate}">
+	<isinclude url="${URLUtils.url('Product-Detail', 'pid', pdict.Product.ID, 'source', pdict.CurrentHttpParameterMap.source.stringValue, 'uuid', pdict.CurrentHttpParameterMap.uuid.stringValue, 'Quantity',pdict.CurrentHttpParameterMap.Quantity.stringValue)}"/>
+</isdecorate>

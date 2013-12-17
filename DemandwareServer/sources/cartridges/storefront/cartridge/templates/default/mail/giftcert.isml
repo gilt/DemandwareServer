@@ -1,0 +1,56 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+
+</head>
+
+<body>
+<table width="100%" cellpadding="0" cellspacing="0">
+	<tr>
+		<td align="center" style="${Resource.msg('email.backgroundcell','email',null)}">
+			<center>
+				<table  style="${Resource.msg('email.containertable','email',null)}">
+					<tr>
+						<td style="${Resource.msg('email.tablecell','email',null)}">
+	
+							<isif condition="${empty(pdict.GiftCertificate.recipientName)}">
+								<h1 style="${Resource.msg('email.h1','email',null)}">${Resource.msg('giftcert.dearcustomer','email',null)}</h1>
+							<iselse>
+								<h1 style="${Resource.msg('email.h1','email',null)}">${StringUtils.format(Resource.msg('giftcert.dear','email', null), pdict.GiftCertificate.recipientName)}</h1>
+							</isif>
+				
+							<p>
+								<isif condition="${empty(pdict.GiftCertificate.senderName)}">
+									${Resource.msg('giftcert.someone','email',null)}
+								<iselse>
+									<isprint value="${pdict.GiftCertificate.senderName}"/>
+								</isif>
+								${StringUtils.format(Resource.msg('giftcert.paysattention','email', null), pdict.GiftCertificate.amount)}<a href="${URLUtils.httpHome()}">${Resource.msg('giftcert.dwonlinestore','email',null)}</a>${Resource.msg('giftcert.period','email',null)}
+							</p>
+				
+							<isif condition="${!empty(pdict.GiftCertificate.message)}">
+								<isif condition="${empty(pdict.GiftCertificate.senderName)}">
+									<p>${Resource.msg('giftcert.msgleftforyou','email',null)}</p>
+								<iselse>
+									<p><isprint value="${pdict.GiftCertificate.senderName}"/>${Resource.msg('giftcert.msghasbeenleftforyou','email',null)}</p>
+								</isif>
+								
+								<p><isprint value="${pdict.GiftCertificate.message}"/></p>	
+							</isif>
+				
+							<p>
+								${Resource.msg('giftcert.toredeem','email',null)}
+								<isprint value="${pdict.GiftCertificate.getGiftCertificateCode()}"/>
+							</p>
+	
+						</td>
+					</tr>
+				</table>						
+			</center>
+		</td>
+	</tr>
+</table>
+	
+</body>
+</html>

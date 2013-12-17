@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19">
+
+	<field formid="firstName" label="profile.firstname" type="string" mandatory="true" binding="firstName" max-length="50" missing-error="forms.address.firstname.missing" range-error="forms.address.field.invalid" />
+	<field formid="lastName" label="profile.lastname" type="string" mandatory="true" binding="lastName" max-length="50" missing-error="forms.address.lastname.missing" range-error="forms.address.field.invalid" />
+	<field formid="address1" label="forms.address1" type="string" mandatory="true" binding="address1" max-length="50" missing-error="forms.addresserror" range-error="forms.address.field.invalid" />
+	<field formid="address2" label="forms.address2" type="string" mandatory="false" binding="address2" max-length="50" range-error="forms.address.field.invalid" />
+	<field formid="city" label="forms.city" type="string" mandatory="true" binding="city" min-length="2" max-length="50" missing-error="forms.address.city.missing" range-error="forms.address.field.invalid" />
+	<field formid="zip" label="forms.zippostalcode" type="string" mandatory="true" min-length="5" max-length="10" regexp="(^\d{5}(-\d{4})?$)|(^[abceghjklmnprstvxyABCEGHJKLMNPRSTVXY]{1}\d{1}[A-Za-z]{1} *\d{1}[A-Za-z]{1}\d{1}$)" binding="postalCode" missing-error="forms.errorzip" range-error="forms.address.field.invalid" parse-error="forms.address.field.invalid" />
+
+	<!-- use set of supported billing countries -->
+	<field formid="country" label="forms.country" type="string" default="US" mandatory="true" binding="countryCode" missing-error="forms.address.country.missing" value-error="forms.address.field.invalid">
+		<options>
+			<option optionid="" 	label="forms.select"	value=""/>
+			<option optionid="US" 	label="country.unitedstates"	value="US"/>
+			<option optionid="DE" 	label="country.germany"		value="DE"/>
+			<option optionid="CA" 	label="country.canada"		value="CA"/>
+		</options>	
+	</field>
+
+	<!-- use global state list -->
+	<include formid="states" name="states"/>
+
+	<!-- phone is optional for billing addresses -->
+	<field formid="phone" label="profile.phone" description="forms.address.phone.example" type="string" mandatory="false" binding="phone" max-length="20" missing-error="forms.address.phone.missing" range-error="forms.address.field.invalid" />
+
+	<!-- actions provided by the edit billing address dialog -->
+	<action formid="apply" valid-form="true"/>
+	<action formid="remove" valid-form="false"/>
+</form>

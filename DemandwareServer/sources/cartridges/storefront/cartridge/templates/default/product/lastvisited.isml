@@ -1,0 +1,14 @@
+<isinclude template="util/modules"/>
+<isif condition="${!empty(pdict.LastVisitedProducts)}">
+	<div class="last-visited">
+		<h2>${Resource.msg('lastvisited.header','product',null)}</h2>
+			<ul id="horizontal-carousel">
+			<isloop items="${pdict.LastVisitedProducts}" var="product" begin="0" end="2">
+				<li>
+					<isproducttile product="${product}" showswatches="${false}" showpricing="${true}" showpromotion="${true}" showrating="${false}"/>
+				</li>
+			</isloop>
+			</ul>
+	</div>
+	
+</isif>

@@ -1,0 +1,6 @@
+<script type="text/javascript">
+
+var removeRegistryText = "${Resource.msg('giftregistry.deleteregistryconfirm','account',null)}";
+var removeRegistryURL = "${URLUtils.https('GiftRegistry-Delete')}";;
+
+</script>

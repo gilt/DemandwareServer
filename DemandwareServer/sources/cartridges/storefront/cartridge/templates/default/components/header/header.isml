@@ -1,0 +1,76 @@
+<iscache type="relative" hour="24"/>
+<div id="header" role="banner">
+
+	<header>
+
+		<!--  branding logo -->
+		<h1 class="primary-logo">
+			<a href="${URLUtils.httpHome()}">
+				<img src="${URLUtils.staticURL('/images/logo.png')}" alt="${Resource.msg('global.storename','locale',null)}">
+				<span>${Resource.msg('global.storename','locale',null)}</span>
+			</a>
+		</h1>
+	
+		<a href="#main" class="visually-hidden">Skip to content</a>
+	    
+	
+		<iscomment>INCLUDE: Mini-cart, do not cache</iscomment>
+	    <div id="mini-cart">
+	    	<isinclude url="${URLUtils.url('Cart-MiniCart')}"/>
+	    </div>
+	    
+		<!--  utility user menu -->
+		<iscomment>INCLUDE: Customer login information, login, etc. (contains personal information, do not cache)</iscomment>
+		<isinclude url="${URLUtils.url('Home-IncludeHeaderCustomerInfo')}"/> 
+	
+		<!-- utility menu -->
+		<ul class="menu-utility">
+			<li>
+				<a href="${URLUtils.https('Wishlist-Show')}" title="${Resource.msg('header.wishlistlink','components',null)}">
+					${Resource.msg('header.wishlistlink','components',null)}
+				</a>
+			</li>
+			<li>
+				<a href="${URLUtils.https('GiftRegistry-Start')}" title="${Resource.msg('header.registrylink','components',null)}">
+					${Resource.msg('header.registrylink','components',null)}
+				</a>
+			</li>
+			<li>
+				<a href="${URLUtils.http('Stores-Find')}" title="${Resource.msg('header.storelocator','components',null)}">
+					${Resource.msg('header.storelocator','components',null)}
+				</a>
+			</li>
+			<li class="last">
+				<a href="${URLUtils.http('CustomerService-Show')}" title="${Resource.msg('global.helplink','locale',null)}">
+					${Resource.msg('global.helplink','locale',null)}
+				</a>
+			</li>
+		</ul> 
+	    
+	    <iscomment>SLOT CONFIGURATION:  SLOT/ID: header-banner</iscomment>
+	    <div class="header-banner">
+	    	<isslot id="header-banner" description="Header banner within the header, between the logo and search bar, width XXXpx by height XXpx." context="global" />
+	    </div>
+		
+	</header>
+	
+</div><!-- /header -->
+
+<div id="navigation" role="navigation">
+
+	<nav>
+
+		<h1 class="visually-hidden navigation-header">Catalog Navigation</h1>
+		
+		<!--  category navigation -->
+		<iscomment>INCLUDE: category menu</iscomment>
+		<isinclude url="${URLUtils.url('Home-IncludeHeaderMenu')}"/>
+		
+		<div class="header-search">
+			<isinclude template="search/simplesearch"/>
+		</div>
+
+	</nav>
+
+</div><!-- /navigation -->
+

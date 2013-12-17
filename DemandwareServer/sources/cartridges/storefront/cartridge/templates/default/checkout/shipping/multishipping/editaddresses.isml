@@ -1,0 +1,118 @@
+<isset name="DecoratorTemplate" value="checkout/pt_checkout" scope="page"/>
+<isif condition="${pdict.CurrentHttpParameterMap.format.stringValue == 'ajax' || pdict.CurrentHttpParameterMap.pwr.stringValue == 'true' || pdict.CurrentHttpParameterMap.source.stringValue == 'search' || pdict.CurrentHttpParameterMap.source.stringValue == 'quickview' || pdict.CurrentHttpParameterMap.source.stringValue == 'cart'}">
+	<isset name="DecoratorTemplate" value="util/pt_empty" scope="page"/>
+</isif>
+
+<isdecorate template="${DecoratorTemplate}" />
+<isinclude template="util/modules"/>
+
+	<isif condition="${DecoratorTemplate == 'checkout/pt_checkout'}">		
+		<iscomment>checkout progress indicator</iscomment>
+    	<ischeckoutprogressindicator step="1" multishipping="true"/>
+    	<h1>${Resource.msg('pt_checkout.breadcrumb','checkout',null)}</h1>
+	</isif>
+	
+	<h1>${Resource.msg('multishipping.editaddress.headline','checkout',null)}
+		<span class = "required-indicator">&#8226; <em>${Resource.msg('global.requiredfield','locale',null)}</em></span>
+	</h1>
+
+	<form method="post" action="${URLUtils.httpsContinue()}" id="edit-address-form" name="${pdict.CurrentForms.multishipping.editAddress.htmlName}">		
+		<fieldset>		
+			
+			<isif condition="${pdict.Status != null && pdict.Status.isError()}">				 
+			 	<!--- Use the error code value to build an appropriate error message --->
+				<span class="form-error">
+					<isprint value="${Resource.msg('addressdetails.' + pdict.Status.code, 'account',null)}"/>
+				</span>
+			</isif>
+			
+			<isset name="addresses" value="${pdict.CurrentForms.multishipping.editAddress.addressList}" scope="page"/>
+	
+			<div class="select-address">
+		
+				<div class="form-row">
+									
+					<label for="${pdict.CurrentForms.singleshipping.addressList.htmlName}">
+						${Resource.msg('global.selectaddressmessage','locale',null)}:
+					</label>
+					<select class="input-select" name="${addresses.htmlName}">
+						<option value="newAddress" selected="selected">${Resource.msg('forms.multishipping.editaddress.select.newaddress','forms',null)}</option>
+						<isloop items="${addresses.options}" var="option">
+							<isset name="address" value="${option.object}" scope="page"/>
+							<isif condition="${!empty(address.ID)}">
+								<isset name="prefix" value="${'(' + address.ID + ')'}" scope="page"/>
+							<iselse/>
+								<isset name="prefix" value="${address.firstName + ' ' + address.lastName + ','}" scope="page"/>
+							</isif>
+							<option value="${option.optionId}" <isif condition="${option.selected}">selected="selected"</isif>><isprint value="${prefix}"/> <isprint value="${address.address1}"/>, <isprint value="${address.city}"/>, <isprint value="${address.stateCode}"/>, <isprint value="${address.postalCode}"/></option>
+						</isloop>
+					</select>						
+				</div>
+					
+				<div class="form-row form-row-button">
+					<button class="dialogify cancel" name="${pdict.CurrentForms.multishipping.editAddress.selectAddress.htmlName}" type="submit" value="Go" data-dlg-action='{"isForm": true}'>${Resource.msg('multishippingaddresses.select','checkout',null)}</button>
+				</div>
+				
+			</div>
+			
+			<isinputfield formfield="${pdict.CurrentForms.multishipping.editAddress.addressFields.firstName}" type="input"/>
+		    	
+	    	<isinputfield formfield="${pdict.CurrentForms.multishipping.editAddress.addressFields.lastName}" type="input"/>
+	    	
+	    	<isinputfield formfield="${pdict.CurrentForms.multishipping.editAddress.addressFields.address1}" type="input"/>
+	    	
+			<div class="form-field-tooltip">
+				(<a href="${URLUtils.url('Page-Show', 'cid', 'apo-fpo')}" class="tooltip">
+					${Resource.msg('singleshipping.apofpo','checkout',null)}
+					<div class="tooltip-content"  data-layout="small">
+							<iscontentasset aid="apo-fpo"/>
+					</div>
+				</a>)
+			</div>
+	    	
+	    	<isinputfield formfield="${pdict.CurrentForms.multishipping.editAddress.addressFields.address2}" type="input"/>
+	    	
+	    	<isinputfield formfield="${pdict.CurrentForms.multishipping.editAddress.addressFields.country}" type="select"/>
+	    	
+	    	<isinputfield formfield="${pdict.CurrentForms.multishipping.editAddress.addressFields.states.state}" type="select"/>
+	    	
+	    	<iscomment>
+		    	States will be populated via javascript in rich ui.
+		    	Solution for simple ui is still required. CSS?
+		    	<isinputfield formfield="${pdict.CurrentForms.multishipping.editAddress.addressFields.states.stateUS}" type="select"/>
+		    	
+		    	<isinputfield formfield="${pdict.CurrentForms.multishipping.editAddress.addressFields.states.stateCA}" type="select"/>
+		    	
+		    	<isinputfield formfield="${pdict.CurrentForms.multishipping.editAddress.addressFields.states.stateDE}" type="select"/>
+	    	</iscomment>
+	    	
+	    	<isinputfield formfield="${pdict.CurrentForms.multishipping.editAddress.addressFields.city}" type="input"/>
+	    	
+	    	<isinputfield formfield="${pdict.CurrentForms.multishipping.editAddress.addressFields.zip}" type="input"/>
+	    	
+	    	<isinputfield formfield="${pdict.CurrentForms.multishipping.editAddress.addressFields.phone}" type="input"/>
+				
+			<div class="form-field-tooltip with-helper-text">
+				(<a href="${URLUtils.url('Page-Show', 'cid', 'help-telephone')}" class="tooltip">
+					${Resource.msg('singleshipping.phonerequired','checkout',null)}
+					<div class="tooltip-content"  data-layout="small">
+						<iscontentasset aid="help-telephone"/>
+					</div>
+				</a>)
+			</div>
+			
+			<iscomment>Add address to Address Book</iscomment>
+    		<isif condition="${pdict.CurrentCustomer.authenticated}">
+    			<isinputfield formfield="${pdict.CurrentForms.multishipping.editAddress.addToAddressBook}" type="checkbox" rowclass="form-indent label-inline"/>
+    		</isif>
+    		
+    		<div class="form-row form-row-button">								
+				<button type="submit" name="${pdict.CurrentForms.multishipping.editAddress.save.htmlName}" value="${Resource.msg('global.save','locale',null)}"><span>${Resource.msg('global.save','locale',null)}</span></button>
+				<button class="cancel cancel-button" type="submit" name="${pdict.CurrentForms.multishipping.editAddress.cancel.htmlName}" value="${Resource.msg('global.cancel','locale',null)}">
+					${Resource.msg('global.cancel','locale',null)}
+				</button>
+			</div>
+		</fieldset>
+			
+	</form>
+</isdecorate>

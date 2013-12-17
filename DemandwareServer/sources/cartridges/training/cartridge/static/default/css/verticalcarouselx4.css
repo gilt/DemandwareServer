@@ -1,0 +1,21 @@
+/***** JCarousel vertical x 4 Skinning *****/
+.jcarousel-container-horizontal {padding: 20px 40px;width: 245px;}
+.jcarousel-container-vertical {height: 190px;padding: 40px 20px;width: 660px;}
+.jcarousel-clip {margin:auto;height: 190px;overflow: hidden;}
+.jcarousel-item-horizontal {margin-right: 10px;}
+.jcarousel-item-vertical {margin-bottom: 10px;}
+.jcarousel-list li, .jcarousel-item {width: 660px;height: 190px;}
+.productcarousel {height: 190px; margin-bottom:10px;}
+.productcarousel .product-tile {width: 150px; height: 190px; float: left; padding: 5px 5px 5px 0px;}
+.productcarousel .product-tile .product-image {height: 120px; width:120px;}
+.productcarousel .product-tile .product-name {margin: 0px 5px; font-size: 1em;}
+.productcarousel .product-tile .product-image img {height: 120px; width:120px;}
+/* Vertical Buttons */
+.jcarousel-next-vertical {background: transparent url(../images/carousol_next-vertical.gif) no-repeat 0 0;bottom: 5px;cursor: pointer;height: 32px;left: 640px;position: absolute;width: 32px;}
+.jcarousel-next-vertical:hover {background-position: 0 -32px;}
+.jcarousel-next-vertical:active {background-position: 0 -64px;}
+.jcarousel-next-disabled-vertical, .jcarousel-next-disabled-vertical:hover, .jcarousel-next-disabled-vertical:active {background-position: 0 -96px;cursor: default;}
+.jcarousel-prev-vertical {background: transparent url(../images/carousol_prev-vertical.gif) no-repeat 0 0;cursor: pointer;height: 32px;left: 640px;position: absolute;top: 5px;width: 32px;}
+.jcarousel-prev-vertical:hover {background-position: 0 -32px;}
+.jcarousel-prev-vertical:active {background-position: 0 -64px;}
+.jcarousel-prev-disabled-vertical, .jcarousel-prev-disabled-vertical:hover, .jcarousel-prev-disabled-vertical:active {background-position: 0 -96px;cursor: default;}

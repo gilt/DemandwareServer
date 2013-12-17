@@ -1,0 +1,40 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<title>${Resource.msg('lockoutemail.title','account',null)}</title>
+</head>
+<body>
+<table width="100%" cellpadding="0" cellspacing="0">
+	<tr>
+		<td align="center" style="${Resource.msg('email.backgroundcell','email',null)}">
+			<center>
+				<table  style="${Resource.msg('email.containertable','email',null)}">
+					<tr>
+						<td style="${Resource.msg('email.tablecell','email',null)}">
+						
+							<h1 style="${Resource.msg('email.h1','email',null)}">
+								${Resource.msg('passwordemail.dear','account',null)}
+								<isprint value="${pdict.TempCustomer.profile.firstName}"/>
+								<isprint value="${pdict.TempCustomer.profile.lastName}"/>,
+							</h1>
+							
+							<p>${Resource.msg('lockoutemail.message1','account',null)}</p>
+							
+							<p>${Resource.msg('lockoutemail.message2','account',null)}</p>
+							
+							<p>${Resource.msg('lockoutemail.message3','account',null)}</p>
+							
+							<p>${Resource.msg('lockoutemail.message4','account',null)}</p>
+						
+						</td>
+					</tr>
+				</table>						
+			</center>
+		</td>
+	</tr>
+</table>
+	
+	
+</body>
+</html>

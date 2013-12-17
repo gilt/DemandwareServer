@@ -1,0 +1,34 @@
+<iscomment>
+	This template renders a static breadcrumb navigation. The template
+	can be called with two optional breadcrumb steps. Each breadcrumb
+	step consists of two value, one for the display text and one
+	for the URL to call.
+</iscomment>
+
+<ol class="breadcrumb">
+
+	<iscomment>HOME BREADCRUMB</iscomment>
+	<li><a href="${URLUtils.httpHome()}" title="${Resource.msg('global.home','locale',null)}" <isif condition="${pdict.bctext1 == null && pdict.bctext2 == null && pdict.bctext3 == null }"> class="breadcrumb-last"</isif>>${Resource.msg('global.home','locale',null)}</a></li>
+	
+	<iscomment>FIRST BREADCRUMB</iscomment>
+	<isif condition="${pdict.bcurl1 != null}">
+		<li><a href="${pdict.bcurl1}" title="${pdict.bctext1}"  <isif condition="${pdict.bctext2 == null && pdict.bctext3 == null }"> class="breadcrumb-last"</isif>>${pdict.bctext1}</a></li>
+	<iselseif condition="${pdict.bcurl1 == null && pdict.bctext1 != null}">
+		<li><span class="breadcrumb-last">${pdict.bctext1}</span></li>
+	</isif>
+	
+	<iscomment>SECOND BREADCRUMB</iscomment>
+	<isif condition="${pdict.bcurl2 != null}">
+		<li><a href="${pdict.bcurl2}" title="${pdict.bctext2}"  <isif condition="${pdict.bctext3 == null }">class="breadcrumb-last"</isif>>${pdict.bctext2}</a></li>
+	<iselseif condition="${pdict.bcurl2 == null && pdict.bctext2 != null}">
+		<li><span class="breadcrumb-last">${pdict.bctext2}</span></li>
+	</isif>
+	
+	<iscomment>THIRD BREADCRUMB</iscomment>
+	<isif condition="${pdict.bcurl3 != null}">
+		<li><a href="${pdict.bcurl3}" title="${pdict.bctext3}" class="breadcrumb-last">${pdict.bctext3}</a></li>
+	<iselseif condition="${pdict.bcurl3 == null && pdict.bctext3 != null}">
+		<li><span class="breadcrumb-last">${pdict.bctext3}</span></li>
+	</isif>
+
+</ol>

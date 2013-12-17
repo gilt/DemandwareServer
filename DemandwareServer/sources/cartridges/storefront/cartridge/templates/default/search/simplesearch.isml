@@ -1,0 +1,8 @@
+<form role="search" action="${URLUtils.url('Search-Show')}" method="get" name="simpleSearch">
+	<fieldset>
+		<legend class="visually-hidden">Search Catalog</legend>
+		<label class="visually-hidden" for="q">${Resource.msg('simplesearch.searchlabel','search',null)}</label>
+		<input type="text" id="q" name="q" value=""  placeholder="${Resource.msg('simplesearch.searchtext','search',null)}" />		
+		<input type="submit" value="go" />
+	</fieldset>
+</form>

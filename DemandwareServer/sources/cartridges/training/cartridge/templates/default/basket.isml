@@ -1,0 +1,6 @@
+<iscomment>
+	Make sure you have a product in your cart in order to see prints, otherwise the code inside loop will not be executed
+</iscomment>
+<!--  commented -->
+<isloop items="${pdict.Basket.allProductLineItems}" var="productLineItem"> ${productLineItem.product.name}<br/>
+</isloop>

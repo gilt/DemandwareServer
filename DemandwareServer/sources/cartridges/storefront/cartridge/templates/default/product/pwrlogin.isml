@@ -1,0 +1,28 @@
+<isdecorate template="product/pt_productdetails">
+<isinclude template="util/modules"/>
+<div class="reviewlogin">
+	<iscomment>new customer</iscomment>
+	<h2>${Resource.msg('product.pwrheader','product',null)}</h2>
+	<div class="logincreate">
+		<h3>${Resource.msg('globalaccount.createheader','locale',null)}</h3>
+		<div class="createaccount">
+			<p>${Resource.msg('globalaccount.createmessage','locale',null)}</p>
+			<form action="${URLUtils.httpsContinue()}" method="post">
+				<fieldset>
+					<div class="createaccountbutton">
+						<button type="submit" value="${Resource.msg('global.createbutton','locale',null)}" name="${pdict.CurrentForms.login.register.htmlName}"><span>${Resource.msg('global.createbutton','locale',null)}</span></button>
+					</div><!-- END: createaccountbutton -->
+					<input type="hidden" name="${pdict.CurrentForms.login.secureKeyHtmlName}" value="${pdict.CurrentForms.login.secureKeyValue}"/>
+				</fieldset>
+			</form>
+			<div class="createbenefits clearfix">
+				<iscontentasset aid="create-account-benefits"/>
+			</div><!-- END: createbenefits -->
+			
+		</div><!-- END: createaccount -->
+	</div><!-- END: logincreate -->
+	<iscomment>returning customer</iscomment>
+	<isinclude template="account/login/logininclude"/>
+	
+</div>
+</isdecorate>

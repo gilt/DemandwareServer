@@ -1,0 +1,56 @@
+<isscript>
+	importScript( "util/ViewHelpers.ds" );
+</isscript>
+
+<isset name="topCat" value="${pdict.category}" scope="page"/>
+<isset name="flyOutRenderer" value="${MainNavigationUtilities.generateFlyoutRendering(topCat)}" scope="page"/>
+<isif condition="${flyOutRenderer.renderFlyout}">
+
+<div class="level-2 ${flyOutRenderer.colLayoutHoriz ? 'menu-horizontal' : ''}">
+
+	<div class="menu-wrapper">
+	
+		<ul class="level-2">
+		
+		<isloop items="${flyOutRenderer.subCategories}" var="subCat" begin="0" end="${flyOutRenderer.firstcolcount-1}" status="subcatstatus">
+			
+			<li ${subcatstatus.first ? 'class=first' : ''} ${subcatstatus.last ? 'class=last' : ''}>
+	
+				<a href="<isprint value="${MainNavigationUtilities.getCategoryUrl(subCat)}" encoding="off"/>" class="level-2">
+					<isprint value="${subCat.getDisplayName()}"/>
+				</a>
+				
+				<isif condition="${ subCat.getOnlineSubCategories().length > 0}">
+				<div class="level-3">
+					<ul class="level-3">
+					
+						<isloop items="${subCat.getOnlineSubCategories()}" var="thirdLevelCategory">
+							<isif condition="${('showInMenu' in thirdLevelCategory.custom) && thirdLevelCategory.custom.showInMenu.valueOf()}">
+								<li>
+									<iscomment><!-- Server side tag in client side tag to enforce printing out unencoded text --></iscomment>
+									<a href="<isprint value="${MainNavigationUtilities.getCategoryUrl(thirdLevelCategory)}" encoding="off"/>">
+										<isprint value="${thirdLevelCategory.getDisplayName()}"/>
+									</a>
+								</li>
+							</isif>
+						</isloop>
+						
+					</ul>	
+				</div>		
+				</isif>
+				
+			</li>
+			
+		</isloop>
+			
+		</ul>
+		
+		<isif condition="${flyOutRenderer.hasCustomContent}">
+			<div class="custom"><isprint value="${topCat.custom.headerMenuBanner}" encoding="off"/></div>
+		</isif>
+	
+	</div>	
+		
+</div>
+
+</isif>

@@ -1,0 +1,31 @@
+<form action="${URLUtils.continueURL()}" method="post" id="${pdict.CurrentForms.productlists.search.htmlName}">
+	
+	<fieldset>
+		
+		<isinputfield formfield="${pdict.CurrentForms.productlists.search.registrantLastName}" type="input" maxlength="255"/>
+		
+		<isinputfield formfield="${pdict.CurrentForms.productlists.search.registrantFirstName}" type="input"  maxlength="255"/>
+		
+		<isinputfield formfield="${pdict.CurrentForms.productlists.search.eventType}" type="select"/>
+		
+		<div class="form-row form-row-button">					
+			<button type="submit" value="${Resource.msg('global.find','locale',null)}" name="${pdict.CurrentForms.productlists.search.search.htmlName}">
+				${Resource.msg('global.find','locale',null)}
+			</button>
+		</div>
+		
+		<div class="gift-registry-advanced">
+			<a href="#" class="toggle">${Resource.msg('giftregistry.advanced','account',null)}</a>
+			<div class="toggle-content">
+				<isinputfield formfield="${pdict.CurrentForms.productlists.search.eventName}" type="input"  maxlength="255"/>			
+				<isinputfield formfield="${pdict.CurrentForms.productlists.search.eventMonth}" type="select" rowclass="event-month"/>			
+				<isinputfield formfield="${pdict.CurrentForms.productlists.search.eventYear}" type="select"/>
+				<isinputfield formfield="${pdict.CurrentForms.productlists.search.eventCity}" type="input"  maxlength="255" rowclass="event-city"/>
+				<isinputfield formfield="${pdict.CurrentForms.productlists.search.eventState}" type="select"/>
+				<isinputfield formfield="${pdict.CurrentForms.productlists.search.eventCountry}" type="select"/>
+			</div>		
+		</div>
+		
+	</fieldset>
+	
+</form>

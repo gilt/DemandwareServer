@@ -1,0 +1,26 @@
+<iscomment>
+p_alert_text : alert text
+p_discount_line_item : discount line item
+</iscomment>
+<isif condition="${pdict.p_discount_line_item!=null && pdict.p_discount_line_item.promotion!=null}">
+	<div class="bonus-discount-container" data-lineitemid="${pdict.p_discount_line_item.UUID}">
+		<div class="bonus-product-alert">
+			<isprint value="${pdict.p_alert_text}"/>
+		</div>
+		<span class="bonus-product-promo">
+			<isprint value="${empty(pdict.p_discount_line_item.promotion.calloutMsg) ? '' : pdict.p_discount_line_item.promotion.calloutMsg.markup}"/>
+		</span>
+		
+		<a class="tooltip" href="#">
+			${Resource.msg('product.promotiondetails','product',null)}
+			<div class="tooltip-content" data-layout="small">
+				<isprint value="${empty(pdict.p_discount_line_item.promotion.details) ? '' : pdict.p_discount_line_item.promotion.details.markup}"/>
+			</div>
+		</a>
+	
+		<div class="buttonbar">
+			<button class="select-bonus-btn" type="button"><span>${Resource.msg('product.selectbonusproduct','product',null)} ${Resource.msg('product.bonusproducts','product',null)}</span></button>	
+			<button class="no-bonus-btn" type="button"><span>${Resource.msg('global.nothanks','locale',null)}</span></button>
+		</div>
+	</div><!-- /.bonusdiscountcontainer -->
+</isif>
