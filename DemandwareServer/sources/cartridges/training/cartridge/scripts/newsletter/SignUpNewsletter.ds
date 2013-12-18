@@ -1,0 +1,31 @@
+/**
+*
+*   @input firstName : String
+*   @input lastName : String
+*   @input email : String
+*   @output subscription: Object
+*/
+importPackage( dw.system );
+importPackage( dw.object );
+
+function execute( args : PipelineDictionary ) : Number
+{
+
+	var logger : Logger = Logger.getLogger( "newsletter" );
+	logger.debug( "Input params firstName: {0} lastName: {1} email: {2}", args.firstName, args.lastName, args.email);
+    
+    try {
+	    var co : CustomObject = CustomObjectMgr.createCustomObject("NewsletterSubscription", args.email);
+	
+	    co.custom.firstName = args.firstName;
+	    co.custom.lastName = args.lastName;
+	    
+	    args.subscription = co;
+    }
+    catch (e)
+    {
+    	logger.error("A newsletter subscription for this email address already exists: {0}", e.causeMessage );
+        return PIPELET_NEXT;	
+    }
+
+}

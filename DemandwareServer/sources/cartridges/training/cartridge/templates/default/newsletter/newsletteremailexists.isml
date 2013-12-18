@@ -1,0 +1,8 @@
+<isdecorate template="account/pt_account">
+	<h4>
+	An error occurred in your subscription. 
+	Maybe the email ${pdict.CurrentForms.newsletter.email.value} already exists ?
+	</h4> 
+	
+	Back to <a href="${URLUtils.url('Newsletter-Start')}">Newsletter Subscription</a>.
+</isdecorate>

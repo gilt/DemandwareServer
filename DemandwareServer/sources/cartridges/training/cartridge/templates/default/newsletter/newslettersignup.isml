@@ -1,0 +1,22 @@
+<isdecorate template="account/pt_account">
+	<isinclude template="util/modules">
+	<h3>${Resource.msg('global.newslettersignup', 'locale', null)}</h3>
+	<form action="${URLUtils.httpContinue()}" method="post" id="${pdict.CurrentForms.newsletter.htmlName}">
+		<fieldset>
+		    <div class="formfield">
+		        <isinputfield formfield="${pdict.CurrentForms.newsletter.fname}" type="input">
+		    </div>
+		    <div class="formfield">
+		        <isinputfield formfield="${pdict.CurrentForms.newsletter.lname}" type="input">
+		    </div>
+		    <div class="formfield">
+		        <isinputfield formfield="${pdict.CurrentForms.newsletter.email}" type="input">
+		        <div class="clear"><!-- FLOAT CLEAR --></div>
+		    </div>
+			<div class="formactions">
+			<input type="submit" value="${Resource.msg('global.submit','locale',null)}" 
+			    name="${pdict.CurrentForms.newsletter.subscribe.htmlName}"/>
+			</div>
+		</fieldset>
+	</form>
+</isdecorate>

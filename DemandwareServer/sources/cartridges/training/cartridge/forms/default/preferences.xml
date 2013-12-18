@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19" secure="true">
+    <field formid="interestApparel" label="forms.preferences.apparel" type="boolean"  binding="custom.interestApparel" />
+    <field formid="interestElectronics" label="forms.preferences.electronics" type="boolean"  binding="custom.interestElectronics" />
+    <field formid="newsletter" label="forms.preferences.newsletter" type="boolean" binding="custom.newsletter" />  
+	
+	<action formid="apply" valid-form="false"/>
+</form>

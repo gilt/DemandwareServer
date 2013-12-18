@@ -12,4 +12,8 @@
 	<commented-out isinclude url="${URLUtils.url('Product-IncludeLastVisited')}"/>
 	<isproducttile product="${pdict.myProduct}" showswatches="${true}" showpricing="${true}"/>
 
+	date / time ::: 
+	<isprint value="${new Date()}" style="DATE_LONG" timezone="SITE"> /
+	<isprint value="${new Date()}" style="DATE_TIME" timezone="SITE">
+
 </isdecorate>

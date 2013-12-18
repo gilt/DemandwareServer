@@ -3,5 +3,11 @@
 	<title>Hello</title> </head>
 	<body>
 		Hello World!
+		
+		<br>
+		
+		<h1>Message: ${Resource.msg('myKey1', 'myBundle', "Did not find it!")}</h1>
+		
+		<h1>Message not found: ${Resource.msg("myKey_notfound", 'myBundle', "Did not find it!")}</h1>
 	</body> 
 </html>

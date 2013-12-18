@@ -1,0 +1,36 @@
+/**
+* This script creates a NewsletterSubscription instance and initializes
+* it with parameters from the pipeline dictionary.
+* Note: the key for the custom object must be unique.
+*
+*   @input firstName : String
+*   @input lastName : String
+*   @input email : String
+*   @output subscription: Object
+*/
+importPackage( dw.system );
+importPackage( dw.object );
+
+function execute( args : PipelineDictionary ) : Number
+{
+	var logger : Logger = Logger.getLogger("newsletter.subscription");
+	logger.debug("Input params firstName: {0} lastName: {1} email: {2}",
+		args.firstName, args.lastName, args.email);
+		
+	try
+	{	
+	    //Use the same email twice to generate a duplicate key exception
+	    var co : CustomObject = CustomObjectMgr.createCustomObject("NewsletterSubscription", args.email);
+	    co.custom.firstName = args.firstName;
+	    co.custom.lastName = args.lastName;
+	    
+	    args.subscription = co;
+	    	   
+		return PIPELET_NEXT;
+	}
+	catch (e) 
+	{	
+		logger.error("A newsletter subscription for this email address already exists: {0}", e.causeMessage );
+		return PIPELET_ERROR;
+	} 
+}
