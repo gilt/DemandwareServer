@@ -1,0 +1,27 @@
+<isdecorate template="account/pt_account">
+	<isinclude template="util/modules">
+	<h3>Please check things you are interested in:</h3>
+	<form action="${URLUtils.httpsContinue()}" method="post" id="${pdict.CurrentForms.preferences.htmlName}">
+		<fieldset>
+		    <div class="formfield">
+		        <isinputfield formfield="${pdict.CurrentForms.preferences.interestApparel}" type="checkbox">
+		    </div>
+		    <div class="formfield">
+		        <isinputfield formfield="${pdict.CurrentForms.preferences.interestElectronics}" type="checkbox">
+		    </div>
+		    <div class="formfield">
+		        <isinputfield formfield="${pdict.CurrentForms.preferences.newsletter}" type="checkbox">
+		        <div class="clear"><!-- FLOAT CLEAR --></div>
+		    </div>
+			<div class="formactions">
+			<button type="submit" value="${Resource.msg('global.apply','locale',null)}" 
+			    name="${pdict.CurrentForms.preferences.apply.htmlName}">
+			    <span>${Resource.msg('global.apply','locale',null)}</span>
+			</button>
+		    </div>
+		    <!-- Follow this pattern to match secure="true" on the form xml -->
+			<input type="hidden" name="${pdict.CurrentForms.preferences.secureKeyHtmlName}" 
+			value="${pdict.CurrentForms.preferences.secureKeyValue}"/>      
+		</fieldset>
+	</form>
+</isdecorate>
